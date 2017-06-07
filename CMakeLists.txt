@@ -64,6 +64,12 @@ add_executable(boids
   src/game.cc
   src/camera.cc
   src/object.cc
+  src/boid.cc
+  src/terrain.cc
+  src/cone.cc
+  src/texture.cpp
+  src/object_texture.cc
+  src/obj_model.cc
   )
 target_link_libraries(boids
   ${ALL_LIBS}

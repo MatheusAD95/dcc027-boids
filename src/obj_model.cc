@@ -18,7 +18,8 @@ ObjModel::ObjModel(const char *path) {
     } else if (!strcmp(header, "vt")) {
       double u, v;
       fscanf(f, "%lf %lf", &u, &v);
-      uvs.push_back(glm::vec2(u, -v)); //-v if DDS texture, remove for TGA/BMP
+      //uvs.push_back(glm::vec2(u, -v)); //-v if DDS texture, remove for TGA/BMP
+      uvs.push_back(glm::vec2(u, v));
     } else if (!strcmp(header, "vn")) {
       double x, y, z;
       fscanf(f, "%lf %lf %lf", &x, &y, &z);
@@ -33,9 +34,11 @@ ObjModel::ObjModel(const char *path) {
       this->vertices.push_back(vertices[v[0] - 1]);
       this->vertices.push_back(vertices[v[1] - 1]);
       this->vertices.push_back(vertices[v[2] - 1]);
-      //this->uvs.push_back(uvs[uv[0] - 1]);
-      //this->uvs.push_back(uvs[uv[1] - 1]);
-      //this->uvs.push_back(uvs[uv[2] - 1]);
+      if (uv[0]) {
+        this->uvs.push_back(uvs[uv[0] - 1]);
+        this->uvs.push_back(uvs[uv[1] - 1]);
+        this->uvs.push_back(uvs[uv[2] - 1]);
+      }
     } else {
       fscanf(f, "%*[^\n]");
     }

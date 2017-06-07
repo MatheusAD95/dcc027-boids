@@ -7,6 +7,7 @@ class Camera {
     glm::mat4 getView();
     void rotate();
     void lookAt(glm::vec3);
+    void setPos(glm::vec3);
   private:
     glm::vec3 position, look_at;
     glm::mat4 view;

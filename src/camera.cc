@@ -13,11 +13,11 @@ Camera::Camera(glm::vec3 position, glm::vec3 look_at) {
   this->look_at = look_at;
   view = glm::lookAt(position, look_at, glm::vec3(0, 1, 0));
 }
-void rotate() {
-}
-#include <iostream>
 void Camera::lookAt(glm::vec3 look_at) {
   this->look_at = look_at;
-  std::cout << "Now looking at " << look_at[0] << " " << look_at[1] << " " << look_at[2] << "\n";
+  view = glm::lookAt(position, look_at, glm::vec3(0, 1, 0));
+}
+void Camera::setPos(glm::vec3 pos) {
+  position = pos;
   view = glm::lookAt(position, look_at, glm::vec3(0, 1, 0));
 }

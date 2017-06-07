@@ -4,6 +4,7 @@
 Terrain::Terrain(glm::mat4 VP, glm::vec3 pos)
   : Object(VP, pos, "../assets/plane", 1) {
     // rescale to make the terrain bigger
-    model = glm::scale(model, glm::vec3(100.0f, 100.0f, 100.0f));
+    GLfloat size = 200.0f;
+    model = glm::scale(model, size*glm::vec3(1.0f, 1.0f, 1.0f));
     MVP = VP*model;
 }
