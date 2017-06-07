@@ -71,6 +71,7 @@ void Game::start() {
   flock_position = glm::vec3(0, 0, 0);
   objects.push_back(guide);
   // terrain is modeled as a plane
+
   Object *o = new Terrain(VP, glm::vec3(0, 0, 0));
   objects.push_back(o);
 
@@ -153,13 +154,23 @@ void Game::loop() {
         obstacle_pos.y = boids[i]->getPos().y;
         obstacle_pos = obstacle_pos;
         GLfloat w = obstacles[j]->getWidth();
+        glm::vec3 v1 = boids[i]->getVel();
+        glm::vec3 v2 = (obstacle_pos - boids[i]->getPos());
+        v1.y = v2.y; // calculate the angle only on the xz plane
+        GLfloat cosT = glm::dot(v1, v2);
+        cosT /= (sqrt(glm::dot(v1, v1))*sqrt(glm::dot(v2, v2)));
+        // if cosT is close to -1 then the repulsion of the obstacle is
+        // canceling the boid velocity and then it gets stuck
+        if (cosT < -0.9) {
+          // shift the obstacle center a bit so it pushed the boid a little
+          // to the side instead on canceling its velocity
+          obstacle_pos.x += 0.1f;
+          obstacle_pos.x += 0.1f;
+        }
         boids[i]->addRepulsion(obstacle_pos, w*4.5*(h - 0.5f*y)/h);
-        // TODO calculate angle between vel and (obstacle_pos - boid_pos)
-        // if it's zero, we should tilt the boid (tilt more the close it is)
       }
       boids[i]->rotateToVel();
       boids[i]->move();
-
     }
     cameras.front()->lookAt(guide->getPos());
     glm::vec3 gvel = guide->getVel(),

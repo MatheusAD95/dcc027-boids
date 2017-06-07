@@ -10,6 +10,7 @@ class ObjModel {
   public:
     ObjModel(const char *);
     std::vector<glm::vec3> getVertices() { return vertices; }
+    std::vector<glm::vec3> getNormals() { return normals; }
     std::vector<glm::vec2> getUV() { return uvs; }
   private:
     std::vector<glm::vec3> vertices, normals;

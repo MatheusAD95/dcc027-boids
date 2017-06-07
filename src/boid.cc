@@ -9,7 +9,8 @@ Boid::Boid(glm::mat4 VP, glm::vec3 pos)
   //    1, "../assets/BirdText.bmp") {
 
   //: Object(VP, pos + glm::vec3(0.0f, 3.0f, 0.0f), "../assets/tt",
-  //    6, "../assets/teteu_text.bmp") {
+  //    6, "../assets/teteu_text.bmp") {  //doesnt work because tt0 doesnt
+                                          // map uvs
   : Object(VP, pos + glm::vec3(0.0f, 3.0f, 0.0f), "../assets/teteu_text",
       1, "../assets/teteu_text.bmp") {
 

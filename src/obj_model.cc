@@ -18,7 +18,6 @@ ObjModel::ObjModel(const char *path) {
     } else if (!strcmp(header, "vt")) {
       double u, v;
       fscanf(f, "%lf %lf", &u, &v);
-      //uvs.push_back(glm::vec2(u, -v)); //-v if DDS texture, remove for TGA/BMP
       uvs.push_back(glm::vec2(u, v));
     } else if (!strcmp(header, "vn")) {
       double x, y, z;
@@ -39,6 +38,9 @@ ObjModel::ObjModel(const char *path) {
         this->uvs.push_back(uvs[uv[1] - 1]);
         this->uvs.push_back(uvs[uv[2] - 1]);
       }
+      this->normals.push_back(normals[n[0] - 1]);
+      this->normals.push_back(normals[n[1] - 1]);
+      this->normals.push_back(normals[n[2] - 1]);
     } else {
       fscanf(f, "%*[^\n]");
     }
@@ -49,6 +51,7 @@ void ObjModel::parseFace(char *s, unsigned *v, unsigned *uv, unsigned *n) {
   int a = 0, b = 0, c = 0;
   while (*s != '/') a = a*10 + *s++ - '0';
   s++; while (*s != '/') b = b*10 + *s++ - '0';
-  s++; while (*s != '/') c = c*10 + *s++ - '0';
+  //s++; while (*s != '/') printf("%c", *s), c = c*10 + *s++ - '0';
+  s++; while (*s) c = c*10 + *s++ - '0';
   *v = a, *uv = b, *n = c;
 }
