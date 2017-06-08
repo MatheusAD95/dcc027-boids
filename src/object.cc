@@ -107,6 +107,11 @@ GLuint Object::addFrame(Frame *f, const char *path, GLuint tex) {
     glBindBuffer(GL_ARRAY_BUFFER, f->uvbuffer);
     glBufferData(GL_ARRAY_BUFFER, uv_data.size()*sizeof(glm::vec2),
         &uv_data[0], GL_STATIC_DRAW);
+    std::vector<glm::vec3> normals = O.getNormals();
+    glGenBuffers(1, &f->normalbuffer);
+    glBindBuffer(GL_ARRAY_BUFFER, f->normalbuffer);
+    glBufferData(GL_ARRAY_BUFFER, normals.size()*sizeof(glm::vec3),
+        &normals[0], GL_STATIC_DRAW);
     return vertex_data.size();
   }
   std::vector<glm::vec3> color_data;
@@ -141,18 +146,33 @@ void Object::drawTxt() {
   Frame g = frames[cnt%number_of_frames];
   glUseProgram(shader.getID());
   glBindVertexArray(g.vao);
+  // MVP uniform
   GLuint MatrixID = glGetUniformLocation(shader.getID(), "MVP");
   glUniformMatrix4fv(MatrixID, 1, GL_FALSE, &MVP[0][0]);
+  // model uniform
+  GLuint ModelID = glGetUniformLocation(shader.getID(), "model");
+  glUniformMatrix4fv(ModelID, 1, GL_FALSE, &model[0][0]);
+  // rot uniform
+  GLuint RotID = glGetUniformLocation(shader.getID(), "rot");
+  glUniformMatrix4fv(RotID, 1, GL_FALSE, &rot[0][0]);
+  // texture uniform
   GLuint TextureID = glGetUniformLocation(shader.getID(), "myTextureSampler");
   glActiveTexture(GL_TEXTURE0);
   glBindTexture(GL_TEXTURE_2D, Texture);
   glUniform1i(TextureID, 0);
+  // pos
   glEnableVertexAttribArray(0);
   glBindBuffer(GL_ARRAY_BUFFER, g.vertexbuffer);
   glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
+  // uvs
   glEnableVertexAttribArray(1);
   glBindBuffer(GL_ARRAY_BUFFER, g.uvbuffer);
   glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 0, (void*)0);
+  // normals
+  glEnableVertexAttribArray(2);
+  glBindBuffer(GL_ARRAY_BUFFER, g.normalbuffer);
+  glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
+
   glDrawArrays(GL_TRIANGLES, 0, number_of_vertices);
   glDisableVertexAttribArray(0);
   glDisableVertexAttribArray(1);

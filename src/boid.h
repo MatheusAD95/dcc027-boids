@@ -50,7 +50,6 @@ class Boid : public Object {
     }
   private:
     glm::vec3 objective;
-    glm::mat4 trans, rot, sca;
     glm::vec3 vel, ivel;
     glm::mat4 id; //controls the rotation
 };

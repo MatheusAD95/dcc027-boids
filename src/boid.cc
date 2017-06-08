@@ -11,8 +11,9 @@ Boid::Boid(glm::mat4 VP, glm::vec3 pos)
   //: Object(VP, pos + glm::vec3(0.0f, 3.0f, 0.0f), "../assets/tt",
   //    6, "../assets/teteu_text.bmp") {  //doesnt work because tt0 doesnt
                                           // map uvs
-  : Object(VP, pos + glm::vec3(0.0f, 3.0f, 0.0f), "../assets/teteu_text",
-      1, "../assets/teteu_text.bmp") {
+  //: Object(VP, pos + glm::vec3(0.0f, 3.0f, 0.0f), "../assets/teteu_text",
+  : Object(VP, pos + glm::vec3(0.0f, 3.0f, 0.0f), "../assets/tt_text",
+      5, "../assets/teteu_text.bmp") {
 
   //: ObjectTx(VP, pos + glm::vec3(0.0f, 3.0f, 0.0f), "../assets/teteu_texture", 1) {
   trans = glm::translate(trans, pos + glm::vec3(0.0f, 3.0f, 0.0f));

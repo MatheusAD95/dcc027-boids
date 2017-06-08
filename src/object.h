@@ -5,7 +5,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <vector>
 typedef struct {
-  GLuint vao, colorbuffer, vertexbuffer, uvbuffer;
+  GLuint vao, colorbuffer, vertexbuffer, uvbuffer, normalbuffer;
 } Frame;
 class Object {
   public:
@@ -25,6 +25,7 @@ class Object {
     glm::mat4 VP, MVP, model;
     glm::vec3 pos;
     GLfloat height, width;
+    glm::mat4 trans, rot, sca;
   private:
     GLuint textured;
     static const GLuint frame_delay = 5;
